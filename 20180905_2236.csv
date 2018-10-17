@@ -1,0 +1,6 @@
+computer,datetime,exp,cbal,participant,trial,trial_type,img,trial_duration,audio_path,audio_file,word,error,word_onset,word_duration,
+ACER,2018-09-05 22:36,wc32v.33,objects1.csv,TEST,p01,prac,obj001accordion.jpg,1.47672766289,C:\Users\temp\Box Sync\LCNL Box Folder\Studies_Koranda\Koranda-WC_3\2_WC32pilot\1_pic_beta/Data/wc32v.33_PTEST/wc32v.33_TEST_p01.wav,wc32v.33_TEST_p01.wav,,,,,
+ACER,2018-09-05 22:36,wc32v.33,objects1.csv,TEST,p01,prac,prac01.gif,1.73060646169,C:\Users\temp\Box Sync\LCNL Box Folder\Studies_Koranda\Koranda-WC_3\2_WC32pilot\1_pic_beta/Data/wc32v.33_PTEST/wc32v.33_TEST_p01.wav,wc32v.33_TEST_p01.wav,,,,,
+ACER,2018-09-05 22:36,wc32v.33,objects1.csv,TEST,p02,prac,trgt31.jpg,1.34465948474,C:\Users\temp\Box Sync\LCNL Box Folder\Studies_Koranda\Koranda-WC_3\2_WC32pilot\1_pic_beta/Data/wc32v.33_PTEST/wc32v.33_TEST_p02.wav,wc32v.33_TEST_p02.wav,,,,,
+ACER,2018-09-05 22:36,wc32v.33,objects1.csv,TEST,003,fill,obj003airplane.jpg,1.34406991797,C:\Users\temp\Box Sync\LCNL Box Folder\Studies_Koranda\Koranda-WC_3\2_WC32pilot\1_pic_beta/Data/wc32v.33_PTEST/wc32v.33_TEST_003.wav,wc32v.33_TEST_003.wav,,,,,
+ACER,2018-09-05 22:36,wc32v.33,objects1.csv,TEST,004,fill,obj004alligator.jpg,1.98472587653,C:\Users\temp\Box Sync\LCNL Box Folder\Studies_Koranda\Koranda-WC_3\2_WC32pilot\1_pic_beta/Data/wc32v.33_PTEST/wc32v.33_TEST_004.wav,wc32v.33_TEST_004.wav,,,,,
