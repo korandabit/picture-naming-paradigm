@@ -1,8 +1,10 @@
-# this version implemented second in the piloting.
-# it entails 1s ISI, and 1+s deadline. (3s buzzer duration)
+# Version .33
+#   (immediately preceded by v.30, v.30L; fix those names.)
+# 2018.08.06 (modified in rm 279)
 
 # picture (and word) naming experiment with a deadline buzzer.
-# picture (and word) naming experiment with a deadline buzzer.
+# this version waits 1+ seconds before the buzzer sounds.
+# AND ISI = .5
 
 import pyaudio
 import wave, glob, os, csv, datetime, socket, shutil
@@ -66,11 +68,13 @@ def presentStimuli(win,stimuli_list, exp, ID, dataPath,
 		if trial_type == 'prac':
 			trial = 'p'+ trial[1:]
 		audio_file = exp + '_' + participant + "_" + trial + ".wav"
+		data_file  = exp + '_' + participant + "_" + ".txt"
 		audio_path = dataPath + '/' + audio_file
+		pdata_path = dataPath + '/' + data_file
 		
 		stim_path = os.getcwd() + stimuliDir + img
 
-		fixation_duration = float(cur_row[3])/1000 + 1
+		fixation_duration = .5 # float(cur_row[3])/1000 + 1
 
 		recorder = hf.AudioRecorder(audio_path)
 		
@@ -108,7 +112,9 @@ def presentStimuli(win,stimuli_list, exp, ID, dataPath,
 			trial_duration = presTime
 			
 		header = ["computer","datetime", "exp", "cbal", "participant", "trial", "trial_type", "img", "trial_duration", "audio_path", "audio_file", "word", "error", "word_onset", "word_duration"]
+		# this should be moved to outside the loop
 
+		cur_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 		lrow = [computer, cur_date, exp, cbal, participant, trial, trial_type, img, trial_duration, audio_path, audio_file, word, error, word_onset, word_duration]
 		
 		# lrow = [cur_date,exp,participant,trial,trial_type,img,dur,audio_path,audio_file]
@@ -120,7 +126,16 @@ def presentStimuli(win,stimuli_list, exp, ID, dataPath,
 		except:
 			print("error opening datafile")
 			hf.write_2('{0}.csv'.format(file_date),lrow,header)
-
+			
+		# data.txt for participant in the part folder
+		try:
+			hf.write_2(pdata_path,lrow,header)
+			# print(lrow)
+		except:
+			print("error opening pdatafile")
+			hf.write_2('{0}.csv'.format(file_date),lrow,header)
+			
+			
 		# write wide format.
 		if trial_type=="trgt":
 			intf = stimuli_list[itemNum - 1][0]
@@ -194,13 +209,13 @@ if __name__ == '__main__':
 	cbal = 'A1a'
 
 	## RUNTIME PARAMS
-	presTime  = 1.5 # how long before deadline buzzer sounds.
+	presTime  = 1.2 # how long before deadline buzzer sounds.
 	
 	# dev parameters
 	development_mode = True # if True, overwrites TEST data everytime.
 	if development_mode:
 		try:
-			shutil.rmtree("Data/wc32v.3_PTEST")
+			shutil.rmtree("Data/wc32v.33_PTEST")
 			error = "deleted old dir(TEST)"
 		except:
 			print("TEST dir didn't exist.")
@@ -212,6 +227,6 @@ if __name__ == '__main__':
 	pause_key = 'p'
 	
 	# runtime
-	runExp(stimuliDir = stimuliDir, exp = "wc32v.3")
+	runExp(stimuliDir = stimuliDir, exp = "wc32v.33")
 	
 	
