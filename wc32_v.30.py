@@ -1,8 +1,8 @@
-# this version implemented first in the piloting.
-# it entails 1s ISI, and .7s deadline. (3s buzzer duration)
+# this version implemented second in the piloting.
+# it entails 1s ISI, and 1+s deadline. (3s buzzer duration)
 
 # picture (and word) naming experiment with a deadline buzzer.
-
+# picture (and word) naming experiment with a deadline buzzer.
 
 import pyaudio
 import wave, glob, os, csv, datetime, socket, shutil
@@ -194,7 +194,7 @@ if __name__ == '__main__':
 	cbal = 'A1a'
 
 	## RUNTIME PARAMS
-	presTime  = .7 # how long before deadline buzzer sounds.
+	presTime  = 1.5 # how long before deadline buzzer sounds.
 	
 	# dev parameters
 	development_mode = True # if True, overwrites TEST data everytime.
