@@ -1,7 +1,9 @@
-# 2018.07.21
-# word choice 3.2
-# pilot v4 (in development)
-# picture (and word) naming experiment with a deadline buzzer. this is a pre-functional build for the third pilot version (in python). it entails xx s ISI, and xx s deadline. (2.7s buzzer duration)
+# 2018.10
+# base script.
+# offline versions were consolidated up to this point.
+# roughly, those versions were deadline naming plus a few mods.
+# this is the last of those consolidations (as of 10/20)
+# picture (and word) naming experiment with a deadline buzzer. 
 
 """
 # to do:
