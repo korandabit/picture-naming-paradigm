@@ -1,7 +1,9 @@
 # wc_picturenaming
-python picture naming experiment with deadline option
+python picture naming experiment with option for:  
 
-This is the version used in the piloting during 2018 summer.  
+ - fixed presentation,  
+ - experimenter trial-advancing, 
+ - deadline buzzer.
 
 ## Needs file
 cbal_xx.csv list of experiment trial (jpg) filenames and runtime variables  
