@@ -83,17 +83,16 @@ def playAudio(waveFile,duration,keypress='space'):
 	p.terminate()
 	return(responses,duration)
 
+
+	
 # Takes information about experiment name and repository
 # Gets information from experimenter about participant ID number
-def getID(expName, 
+def makePath(expName,cbal, ID,
 		  header = "", 
 		  dataRepository = "/Data"):
 	cwd = os.getcwd()
-	userInfo = {"Participant ID": "TEST"}
-	title_text = "Configure Participant"   
-	dlg = gui.DlgFromDict(dictionary = userInfo, title = title_text)
-	ID = dlg.data[0].encode('ascii','ignore').strip()
-	newpath = cwd + dataRepository + "/" + expName + "_P" + str(ID).zfill(2)
+	cbal_strip = cbal[:-4] #remove csv
+	newpath = cwd + dataRepository + "/" + expName + "_" + cbal_strip + "_" + str(ID).zfill(2)
 	while os.path.exists(newpath):
 		if str(ID) == "TEST":
 			return (ID, newpath)
@@ -103,7 +102,7 @@ def getID(expName,
 		ID = dlg.data[0].encode('ascii','ignore').strip()
 		newpath = cwd + dataRepository + "/" + expName + str(ID).zfill(2)
 	os.makedirs(newpath)
-	return (ID, newpath)
+	return (newpath)
 
 # Take the instruction files from the instructionsDir. Searches specifically for filetype files
 # and matches the files for the condition of the participant. The instruction files should be in
