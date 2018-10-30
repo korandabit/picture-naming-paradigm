@@ -64,11 +64,13 @@ def userGUI(exp="wc",cbal = "cbal.csv"):
 				"exp_name": exp}
 	title_text = "Configure Participant"   
 	dlg = gui.DlgFromDict(dictionary = userInfo, title = title_text)
+	# dlg = gui.Dlg(title_text)
+	# dlg.addField("Participant ID:", suggest_id)
 	# print dlg.data[1]
 	ID = dlg.data[0].encode('ascii','ignore').strip()
 	cbal = dlg.data[1].encode('ascii','ignore').strip()
 	expName = dlg.data[2].encode('ascii','ignore').strip()
-	
+	print(ID,cbal,expName)
 	return (ID,cbal,expName)
 	
 # test fixation timer accuracy; general latencies.
@@ -92,6 +94,12 @@ def presentStimuli(win,stimuli_list, runtime_info ,
 
 	# for itemNum, cur_row in enumerate(stim_list[0:2]):
 	for itemNum, cur_row in enumerate(stimuli_list):
+		if itemNum == 0:
+			header = ["computer","datetime", "exp", "cbal", "participant", "trial", "trial_type", "img", "trial_duration", "isi", "audio_path", "audio_file", "said", "error"]
+			header.extend(cur_row[-3:])
+			if deadline:
+				header.append("deadline")
+			continue
 		key_check = []
 		
 		participant = str(runtime_info["ID"]).zfill(2)
@@ -159,11 +167,12 @@ def presentStimuli(win,stimuli_list, runtime_info ,
 		# except:
 			# trial_duration = presTime
 		trial_duration_ms = trial_duration*1000
-		header = ["computer","datetime", "exp", "cbal", "participant", "trial", "trial_type", "img", "trial_duration", "isi", "audio_path", "audio_file", "said", "error"]
+
 		# this should be moved to outside the loop
 
 		cur_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 		lrow = [computer, cur_date, runtime_info["exp"], runtime_info["cbal"], participant, trial, trial_type, img, trial_duration_ms, isi, audio_path, audio_file, said, error]
+		lrow.extend(cur_row[-3:])
 		
 		if deadline:
 			header.append("deadline")
@@ -188,10 +197,11 @@ def presentStimuli(win,stimuli_list, runtime_info ,
 			
 			
 		# write wide format.
-		wide_type_trials = ["target","repetition"]
+		wide_type_trials = ["target","repetition","restxt","t_img"]
 		
 		if trial_type in wide_type_trials:
-			intf = stimuli_list[itemNum - 1][0]
+			intf = stimuli_list[itemNum][5]
+
 			lrow[6] = intf
 			try:
 				hf.write_2('wdata.csv',lrow,header)
@@ -227,8 +237,20 @@ instr2 = """This concludes the experiment, thank you for your time. Please let t
 	
 	
 def runExp(stimuliDir):
+
+	# settings for specific counterbalance lists.
+	cbal_file = "wc_repetition_secondary_cbals.csv"
+	cbal_column = 4
+	
+	with open(cbal_file, 'rb') as f:
+		reader2=csv.reader(f)
+		full_cbal_list = list(reader2)
+		
+	# identify unique cbals
+	cbal_unique= sorted(list({cbal[4] for cbal in full_cbal_list}))
+
 	# instructions = hf.getInstructions(instructionsDir)
-	ID, cbal, expName = userGUI(exp = "wcRepPilot",cbal = "wc1a_rep.csv")
+	ID, cbal, expName = userGUI(exp = "rep1",cbal = cbal_unique)
 	dataPath = hf.makePath(expName=expName,cbal= cbal,ID= ID)
 	# print(dataPath)
 	build_subdir(dataPath)
@@ -239,11 +261,13 @@ def runExp(stimuliDir):
 	
 	# presentStimuli(win,demo_item, exp, ID , dataPath, presTime = presTime, catchBuffer = 2.3) # practice trial
 	
-	# instructions + rest of trials.
-	with open(cbal, 'rb') as f:
-		reader2=csv.reader(f)
-		stim_list = list(reader2)
-	
+
+		
+	stim_list = [full_cbal_list[0]]
+	for row in full_cbal_list:
+		if row[cbal_column] == cbal:
+			stim_list.append(row)	
+
 	runtime_info = {"exp":expName,"cbal":cbal,"ID":ID,"datapath":dataPath}
 	presentStimuli(win,stim_list, runtime_info, presTime = presTime, catchBuffer = 2.3)
 	
@@ -263,7 +287,7 @@ if __name__ == '__main__':
 
 
 	## RUNTIME PARAMS
-	presTime  = 1.2 # how long before deadline buzzer sounds.
+	presTime  = .8 # how long before deadline buzzer sounds.
 	
 	# dev parameters
 	development_mode = False # if True, overwrites TEST data everytime.

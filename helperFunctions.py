@@ -91,8 +91,8 @@ def makePath(expName,cbal, ID,
 		  header = "", 
 		  dataRepository = "/Data"):
 	cwd = os.getcwd()
-	cbal_strip = cbal[:-4] #remove csv
-	newpath = cwd + dataRepository + "/" + expName + "_" + cbal_strip + "_" + str(ID).zfill(2)
+	# cbal_strip = cbal[:-4] #remove csv
+	newpath = cwd + dataRepository + "/" + expName + "_" + cbal + "_" + str(ID).zfill(2)
 	while os.path.exists(newpath):
 		if str(ID) == "TEST":
 			return (ID, newpath)
