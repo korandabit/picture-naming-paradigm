@@ -10,8 +10,15 @@ Main functionality includes
 - detailed .txt log saved with realtime data including 
   - by-trial duration of presentation (ms).
   - runtime environment.
+  - parameter settings (i.e. below)
 
-python picture naming experiment with option for:  
+parameters (online):
+*inputs set during start-up*
+- list (of stimuli) counterbalance version
+- participant number
+- experiment label
+
+parameters (offline):  
 
  - variable durations.
  - deadline buzzer.
